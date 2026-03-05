@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 @layer base {
   * {
     @apply border-white/5;
@@ -43,9 +45,4 @@
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-zinc-600;
-}
-
-/* Smooth transitions */
-* {
-  @apply transition-colors duration-200;
-}
+ }
