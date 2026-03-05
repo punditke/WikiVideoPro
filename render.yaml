@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: wikivideo-pro
+    env: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.x
+      - key: NPM_CONFIG_PRODUCTION
+        value: false
+      - key: NPM_CONFIG_FUND
+        value: false
