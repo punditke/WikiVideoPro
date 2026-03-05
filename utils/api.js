@@ -1,4 +1,3 @@
-// Utility functions for API calls
 export const fetchFromWikimedia = async (endpoint, params) => {
   const baseUrl = 'https://commons.wikimedia.org/w/api.php';
   const defaultParams = {
