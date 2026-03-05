@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { fetchFromWikimedia, extractDuration } from '@/utils/api';
 
 export const useVideos = (initialCategory = 'trending') => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [offset, setOffset] = useState(0);
   const [category, setCategory] = useState(initialCategory);
+  const [searchQuery, setSearchQuery] = useState('');
+  const loadingRef = useRef(false);
 
   const getCategorySearchTerm = (cat) => {
     const terms = {
@@ -53,22 +56,27 @@ export const useVideos = (initialCategory = 'trending') => {
     }
   };
 
-  const fetchVideos = async (searchQuery = '') => {
+  const fetchVideos = useCallback(async (reset = false) => {
+    if (loadingRef.current) return;
+    loadingRef.current = true;
     setLoading(true);
-    setError(null);
-    
+
     try {
       const searchTerm = searchQuery || getCategorySearchTerm(category);
+      const newOffset = reset ? 0 : offset;
+      
       const data = await fetchFromWikimedia('', {
         action: 'query',
         list: 'search',
         srsearch: `${searchTerm} filetype:video`,
         srnamespace: 6,
         srlimit: 20,
+        sroffset: newOffset,
       });
 
       const searchResults = data.query?.search || [];
-      
+      const continueOffset = data.continue?.sroffset;
+
       const videoDetails = await Promise.all(
         searchResults.map(async (item) => {
           const details = await fetchVideoDetails(item.title);
@@ -79,25 +87,34 @@ export const useVideos = (initialCategory = 'trending') => {
           };
         })
       );
+
+      const newVideos = videoDetails.filter(v => v.thumbnail);
       
-      setVideos(videoDetails.filter(v => v.thumbnail));
+      setVideos(prev => reset ? newVideos : [...prev, ...newVideos]);
+      setOffset(continueOffset || 0);
+      setHasMore(!!continueOffset);
     } catch (err) {
-      setError(err.message);
+      console.error(err);
     } finally {
       setLoading(false);
+      loadingRef.current = false;
     }
-  };
+  }, [category, searchQuery, offset]);
 
+  // Reset when category or search changes
   useEffect(() => {
-    fetchVideos();
-  }, [category]);
+    setOffset(0);
+    setHasMore(true);
+    fetchVideos(true);
+  }, [category, searchQuery]);
 
   return {
     videos,
     loading,
-    error,
+    hasMore,
     category,
     setCategory,
-    fetchVideos,
+    fetchVideos: () => fetchVideos(false),
+    setSearchQuery,
   };
 };
