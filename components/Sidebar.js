@@ -1,4 +1,3 @@
-// components/Sidebar.js
 import { motion } from 'framer-motion';
 import { 
   HiTrendingUp, 
@@ -52,38 +51,7 @@ export default function Sidebar({ recentSearches, activeCategory, onCategoryChan
             );
           })}
         </nav>
-
-        {recentSearches.length > 0 && (
-          <div className="mt-8">
-            <h3 className="font-inter text-xs uppercase tracking-wider text-zinc-500 mb-3">
-              Recent Searches
-            </h3>
-            <div className="space-y-2">
-              {recentSearches.map((search, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="px-4 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg cursor-pointer transition-colors"
-                >
-                  {search}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div className="mt-auto p-6 border-t border-white/5">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full" />
-          <div>
-            <p className="font-inter text-sm font-medium">API Status</p>
-            <p className="font-inter text-xs text-emerald-400">● Connected</p>
-          </div>
-        </div>
       </div>
     </motion.aside>
   );
-               }
+        }
