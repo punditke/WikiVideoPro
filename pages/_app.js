@@ -1,6 +1,5 @@
-import '@/styles/globals.css';
-import { motion, AnimatePresence } from 'framer-motion';
-import { AppProvider } from '@/context/AppContext';
+import '../styles/globals.css';
+import { AppProvider } from '../context/AppContext';
 
 export default function App({ Component, pageProps, router }) {
   return (
@@ -29,6 +28,4 @@ export default function App({ Component, pageProps, router }) {
           <Component {...pageProps} />
         </motion.div>
       </AnimatePresence>
-    </AppProvider>
-  );
-    }
+    
