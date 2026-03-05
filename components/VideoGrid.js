@@ -1,4 +1,3 @@
-// components/VideoGrid.js
 import { motion } from 'framer-motion';
 import { HiOutlineFilm, HiOutlineClock } from 'react-icons/hi';
 
@@ -63,7 +62,6 @@ export default function VideoGrid({ videos, isLoading, onVideoSelect }) {
               )}
             </div>
             
-            {/* Badges */}
             <div className="absolute top-3 left-3 flex space-x-2">
               {video.mime?.includes('video') && (
                 <span className="px-2 py-1 text-xs font-inter bg-black/60 backdrop-blur-sm rounded-md border border-white/10 text-white">
@@ -78,21 +76,15 @@ export default function VideoGrid({ videos, isLoading, onVideoSelect }) {
                 {video.duration}
               </span>
             </div>
-
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
           
           <div className="mt-3">
             <h3 className="font-inter text-sm font-medium text-white line-clamp-1">
               {video.title.replace(/_/g, ' ')}
             </h3>
-            <p className="font-inter text-xs text-zinc-400 mt-1">
-              {video.size ? `${(video.size / 1024 / 1024).toFixed(1)} MB` : 'Size unknown'}
-            </p>
           </div>
         </motion.div>
       ))}
     </motion.div>
   );
-      }
+          }
