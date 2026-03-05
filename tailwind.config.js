@@ -1,3 +1,4 @@
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,21 +6,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        'inter': ['Inter', 'sans-serif'],
-        'playfair': ['Playfair Display', 'serif'],
-      },
-      colors: {
-        zinc: {
-          950: '#0a0a0f',
-        },
-        emerald: {
-          400: '#34d399',
-          500: '#10b981',
-        },
-      },
-    },
+    extend: {},
   },
   plugins: [],
 }
