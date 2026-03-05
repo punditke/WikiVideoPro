@@ -9,7 +9,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Home() {
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const { videos, loading, category, setCategory, fetchVideos } = useVideos('trending');
+  const { 
+    videos, 
+    loading, 
+    hasMore, 
+    category, 
+    setCategory, 
+    fetchVideos, 
+    setSearchQuery 
+  } = useVideos('trending');
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    // fetchVideos will be automatically triggered by the hook when searchQuery changes
+  };
 
   return (
     <>
@@ -34,7 +47,7 @@ export default function Home() {
               <p className="text-zinc-400 mt-2">Discover premium video content from Wikimedia Commons</p>
             </div>
 
-            <SearchBar onSearch={fetchVideos} />
+            <SearchBar onSearch={handleSearch} />
 
             <AnimatePresence mode="wait">
               {selectedVideo ? (
@@ -46,6 +59,8 @@ export default function Home() {
                 <VideoGrid 
                   videos={videos}
                   isLoading={loading}
+                  hasMore={hasMore}
+                  onLoadMore={fetchVideos}
                   onVideoSelect={setSelectedVideo}
                 />
               )}
@@ -55,4 +70,4 @@ export default function Home() {
       </div>
     </>
   );
-    }
+            }
