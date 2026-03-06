@@ -11,7 +11,8 @@ export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [view, setView] = useState('grid');
   const { videos, loading, hasMore, category, setCategory, fetchVideos, setSearchQuery } = useVideos('trending');
-
+const { videos, loading, hasMore, category, setCategory, fetchVideos, setSearchQuery } = useVideos('trending');
+console.log('Videos:', videos, 'Loading:', loading);
   const handleSearch = (query) => {
     setSearchQuery(query);
     // The useVideos hook automatically resets and fetches when searchQuery changes
