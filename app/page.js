@@ -10,7 +10,7 @@ import ToggleView from '@/components/ToggleView';
 export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [view, setView] = useState('grid');
-  const { videos, loading, hasMore, setCategory, fetchVideos, setSearchQuery } = useVideos('trending');
+  const { videos, loading, hasMore, category, setCategory, fetchVideos, setSearchQuery } = useVideos('trending');
 
   const handleSearch = (query) => {
     setSearchQuery(query);
