@@ -1,7 +1,13 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiTrendingUp, HiOutlinePhotograph, HiOutlineGlobe, HiOutlineClock, HiOutlineBeaker } from 'react-icons/hi';
+import { 
+  HiTrendingUp, 
+  HiOutlinePhotograph, 
+  HiOutlineGlobe, 
+  HiOutlineClock, 
+  HiOutlineBeaker 
+} from 'react-icons/hi';
 
 const categories = [
   { id: 'trending', name: 'Trending', icon: HiTrendingUp },
@@ -13,7 +19,7 @@ const categories = [
 
 export default function Sidebar({ isOpen, onClose, activeCategory, onCategoryChange }) {
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {isOpen && (
         <>
           {/* Mobile overlay */}
@@ -71,4 +77,4 @@ export default function Sidebar({ isOpen, onClose, activeCategory, onCategoryCha
       )}
     </AnimatePresence>
   );
-            }
+              }
