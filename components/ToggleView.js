@@ -1,3 +1,5 @@
+'use client';
+
 export default function ToggleView({ view, onChange }) {
   return (
     <div className="flex bg-zinc-900/50 backdrop-blur-sm border border-white/5 rounded-lg p-1">
@@ -19,4 +21,4 @@ export default function ToggleView({ view, onChange }) {
       </button>
     </div>
   );
-}
+          }
