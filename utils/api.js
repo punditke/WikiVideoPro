@@ -1,8 +1,45 @@
+// utils/api.js
+
+// Base fetch function
+export async function fetchFromWikimedia(endpoint, params) {
+  const baseUrl = 'https://commons.wikimedia.org/w/api.php';
+  const defaultParams = {
+    format: 'json',
+    origin: '*',
+  };
+
+  const searchParams = new URLSearchParams({
+    ...defaultParams,
+    ...params,
+  });
+
+  try {
+    const response = await fetch(`${baseUrl}?${searchParams}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+}
+
+// Helper to extract duration from title (your existing function)
+export function extractDuration(title) {
+  const durationMatch = title.match(/(\d+)[:_-]?(\d+)/);
+  if (durationMatch) {
+    const mins = durationMatch[1].padStart(2, '0');
+    const secs = durationMatch[2].padStart(2, '0');
+    return `${mins}:${secs}`;
+  }
+  return '00:30';
+}
+
+// New function to fetch video by page ID (for the video page)
 export async function fetchVideoByPageId(pageId) {
   try {
     const data = await fetchFromWikimedia('', {
       action: 'query',
-      pageids: pageId,           // Fetch exactly this page
+      pageids: pageId,
       prop: 'imageinfo',
       iiprop: 'url|thumbnail|size|mime|extmetadata',
       iiurlwidth: 600,
@@ -33,4 +70,4 @@ export async function fetchVideoByPageId(pageId) {
     console.error('Error fetching video by page ID:', error);
     return null;
   }
-}
+      }
