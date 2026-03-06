@@ -2,20 +2,34 @@
 
 import { useState } from 'react';
 import { useVideos } from '@/hooks/useVideos';
+import Header from '@/components/Header';
+import Sidebar from '@/components/Sidebar';
 import VideoGrid from '@/components/VideoGrid';
 import ToggleView from '@/components/ToggleView';
 
 export default function HomePage() {
-  const [view, setView] = useState('grid'); // 'grid' or 'list'
-  const { videos, loading, hasMore, fetchVideos } = useVideos('trending');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [view, setView] = useState('grid');
+  const { videos, loading, hasMore, setCategory, fetchVideos, setSearchQuery } = useVideos('trending');
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    // The useVideos hook automatically resets and fetches when searchQuery changes
+  };
 
   return (
-    <main className="pt-20"> {/* offset for sticky header */}
-      <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <>
+      <Header onMenuClick={() => setSidebarOpen(true)} onSearch={handleSearch} />
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        activeCategory={category}
+        onCategoryChange={setCategory}
+      />
+      <main className="pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex justify-end mb-6">
           <ToggleView view={view} onChange={setView} />
         </div>
-
         <VideoGrid
           videos={videos}
           isLoading={loading}
@@ -23,7 +37,7 @@ export default function HomePage() {
           onLoadMore={fetchVideos}
           view={view}
         />
-      </div>
-    </main>
+      </main>
+    </>
   );
-}
+    }
